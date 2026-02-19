@@ -1,0 +1,63 @@
+<div class="dashboard-container">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <h1>📚 Notes Dashboard</h1>
+    <div class="user-info">
+      <span>Welcome, <strong>{{ userName }}</strong></span>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Upload Form -->
+  <section class="card upload-card">
+    <h2>➕ Upload a New Note</h2>
+    <form (ngSubmit)="uploadNote()" #uploadForm="ngForm">
+      <input
+        type="text"
+        [(ngModel)]="note.title"
+        name="title"
+        placeholder="Note Title"
+        required
+      />
+      <textarea
+        [(ngModel)]="note.description"
+        name="description"
+        placeholder="Note Description"
+      ></textarea>
+      <input type="file" (change)="onFileSelected($event)" required />
+      <button type="submit" class="primary-btn">Upload</button>
+    </form>
+  </section>
+
+  <!-- Notes Table -->
+  <section class="card notes-card">
+    <h2>📝 My Notes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>File</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let n of myNotes">
+          <td>{{ n.title }}</td>
+          <td>{{ n.description }}</td>
+          <td>
+            <a [href]="n.file_url" target="_blank" class="link-btn">View</a>
+          </td>
+          <td>
+            <button class="action-btn view-btn" (click)="viewNote(n)">
+              View
+            </button>
+            <button class="action-btn delete-btn" (click)="deleteNote(n)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
